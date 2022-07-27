@@ -16,9 +16,10 @@ export class CartComponent implements OnInit {
 
   pedido: Pedido;
   cliente:Cliente;
-  // carritoSuscriber: Subscription;
-  // total: number;
-  // cantidad: number;
+ 
+ 
+  total:number;
+  cantidad: number;
 
   constructor(public authService:AuthService,
               public carritoService: CarritoService){
@@ -26,6 +27,9 @@ export class CartComponent implements OnInit {
             // this.initCarrito();
             this.initCarrito();
             this.loadPedido();
+
+            this.total = 0
+            this.cantidad = 0
 
             this.cliente = {
               uid: '',
@@ -65,6 +69,8 @@ export class CartComponent implements OnInit {
   this.carritoService.getCarrito().subscribe( res => {
     this.pedido = res;
     console.log(res)
+    this.getCantidad();
+    this.getTotal()
   })
   }
 
@@ -74,42 +80,35 @@ export class CartComponent implements OnInit {
   
     
 
-//   initCarrito() {
-//  this.pedido
-//   }
+  getTotal() {
+      this.pedido.productos.forEach( producto => {
+           this.total = (producto.producto.precio) * producto.cantidad + this.total; 
+      });
+  }
 
-//   getTotal() {
-//       this.total = 0;
-//       this.pedido.productos.forEach( producto => {
-//            this.total = (producto.producto.precioReducido) * producto.cantidad + this.total; 
-//       });
-//   }
+  getCantidad() {
+      this.pedido.productos.forEach( producto => {
+            this.cantidad =  producto.cantidad + this.cantidad; 
+      });
+  }
 
-//   getCantidad() {
-//       this.cantidad = 0
-//       this.pedido.productos.forEach( producto => {
-//             this.cantidad =  producto.cantidad + this.cantidad; 
-//       });
-//   }
-
-//   async pedir() {
-//     if (!this.pedido.productos.length) {
-//       console.log('añade items al carrito');
-//       return;
-//     }
-//     this.pedido.fecha = new Date();
-//     this.pedido.precioTotal = this.total;
-//     this.pedido.id = this.authService.getId();
-//     const uid = await this.authService.getUid()
-//     const path = 'Clientes/' + uid + '/pedidos/' 
-//     console.log(' pedir() -> ', this.pedido, uid, path);
-
-//     this.authService.createDoc(this.pedido, path, this.pedido.id).then( () => {
-//          console.log('guadado con exito');
-//          this.carritoService.clearCarrito();
-//     });
+  async pedir() {
+    if (!this.pedido.productos.length) {
+      console.log('añade items al carrito');
+      return;
+    }
+    this.pedido.fecha = new Date();
+    this.pedido.precioTotal = this.total;
+    this.pedido.uid = this.authService.getId();
+    const uid = await this.authService.getUid()
+    const path = 'Clientes/' + uid + '/pedidos/' 
+    console.log(' pedir() -> ', this.pedido, uid, path);
+    this.authService.createDoc(this.pedido, path, this.pedido.uid).then( () => {
+         console.log('guadado con exito');
+         this.carritoService.clearCarrito();
+    });
 
    
-//   }
+  }
 
 }
