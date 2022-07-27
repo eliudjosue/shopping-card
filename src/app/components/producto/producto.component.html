@@ -1,0 +1,22 @@
+<div class="grid">
+    <mat-card class="example-card">
+    <!-- <img mat-card-image [src]="producto.foto" alt="Photo of a Shiba Inu"> -->
+    <mat-card-title>{{producto.nombre}}</mat-card-title>
+    <mat-card-content>
+      <p>
+        {{producto.description}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <mat-card-subtitle>${{producto.precio}}</mat-card-subtitle>
+      <button mat-icon-button class="example-icon" 
+      aria-label="Example icon-button with share icon"
+      (click)="addCarrito()"
+      >
+      <mat-icon>shopping_cart</mat-icon>                
+    </button>
+    </mat-card-actions>
+  </mat-card>
+  </div>
+  
+  <!-- " -->
