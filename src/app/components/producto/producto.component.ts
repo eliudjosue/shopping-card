@@ -8,27 +8,26 @@ import { CarritoService } from 'src/app/services/carrito.service';
   styleUrls: ['./producto.component.css']
 })
 export class ProductoComponent implements OnInit {
-  
+
   @Input() producto: Producto;
 
-  constructor(public carritoService: CarritoService) { 
+  constructor(public carritoService: CarritoService) {
     this.producto = {
       nombre: 'string',
-      precio:0,
-      description:'',
-      foto:'',
-      id:'',
-      fecha:new Date(),
-                    };
+      precio: 0,
+      description: '',
+      foto: '',
+      id: '',
+      fecha: new Date(),
+    };
   }
 
   ngOnInit(): void {
   }
-  
+
   addCarrito() {
-    // console.log('addCarrito()');
     this.carritoService.addProducto(this.producto);
-}
+  }
 
 
 }

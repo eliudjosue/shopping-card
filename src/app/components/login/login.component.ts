@@ -17,36 +17,36 @@ export class LoginComponent implements OnInit {
   }
 
   usuario = {
-    email:'',
-    password:''
+    email: '',
+    password: ''
   }
 
-  Ingresar(){
+  Ingresar() {
     const { email, password } = this.usuario;
     this.authService.login(email, password).then(res => {
       console.log("Ingreso :", res);
       if (res?.operationType == 'signIn') {
-         this.router.navigate(['/home']);
+        this.router.navigate(['/home']);
       }
-    }).catch( err =>{
+    }).catch(err => {
       console.log(err)
     })
-    
+
   }
 
-  Registrar(){
+  Registrar() {
     console.log(this.usuario);
     const { email, password } = this.usuario;
     this.authService.register(email, password).then(res => {
       if (res?.operationType == 'signIn') {
         this.router.navigate(['/home']);
-     }
+      }
       console.log("Se registro :", res)
-  })
-}
+    })
+  }
 
 
-  ingresarConGoogle(){
+  ingresarConGoogle() {
     const { email, password } = this.usuario;
     this.authService.loginWithGoogle(email, password).then(res => {
       console.log("Se registro :", res)

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Cliente } from 'src/app/models/cliente.model';
 import { Pedido } from 'src/app/models/pedido.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,104 +12,102 @@ import { CarritoService } from 'src/app/services/carrito.service';
 })
 export class CartComponent implements OnInit {
 
- agrega=''
+  agrega = ''
 
   pedido: Pedido;
-  cliente:Cliente;
-carritoSuscriber: Subscription
- 
-  total:number;
+  cliente: Cliente;
+  carritoSuscriber: Subscription
+
+  total: number;
   cantidad: number;
 
-  constructor(public authService:AuthService,
-              public carritoService: CarritoService,
-              ){
-                this.carritoSuscriber = new Subscription
-    
-            this.initCarrito();
-            this.loadPedido();
+  constructor(public authService: AuthService,
+    public carritoService: CarritoService,
+  ) {
+    this.carritoSuscriber = new Subscription
 
-            this.total = 0
-            this.cantidad = 0
+    this.initCarrito();
+    this.loadPedido();
 
-            this.cliente = {
-              uid: '',
-              email:'',
-              nombre:'',
-              foto:'',
-              referencia:''
-            }
-                
-            this.pedido = {
-              uid: '',
-              cliente: this.cliente,
-              productos: [],
-              precioTotal: 0,
-              estado: 'enviado',
-              fecha: new Date(),
-              valoracion: 0
-          };
-   }
+    this.total = 0
+    this.cantidad = 0
 
-  ngOnInit() {}
+    this.cliente = {
+      uid: '',
+      email: '',
+      nombre: '',
+      foto: '',
+      referencia: ''
+    }
+
+    this.pedido = {
+      uid: '',
+      cliente: this.cliente,
+      productos: [],
+      precioTotal: 0,
+      estado: 'enviado',
+      fecha: new Date(),
+      valoracion: 0
+    };
+  }
+
+  ngOnInit() { }
 
   ngOnDestroy() {
-      // console.log('ngOnDestroy() - carrito componente');
-      if (this.carritoSuscriber) {
-         this.carritoSuscriber.unsubscribe();
-      }
+    if (this.carritoSuscriber) {
+      this.carritoSuscriber.unsubscribe();
+    }
   }
 
 
 
 
-  loadPedido(){
-  this.carritoSuscriber = this.carritoService.getCarrito().subscribe( res => {
-    // console.log('loadPedido() en carito', res);
-    this.pedido = res;
-    this.getCantidad();
-    this.getTotal()
-  })
+  loadPedido() {
+    this.carritoSuscriber = this.carritoService.getCarrito().subscribe(res => {
+      this.pedido = res;
+      this.getCantidad();
+      this.getTotal()
+    })
   }
 
   initCarrito() {
-     this.pedido
+    this.pedido
   }
-  
-    
+
+
 
   getTotal() {
     this.total = 0
-      this.pedido.productos.forEach( producto => {
-           this.total = (producto.producto.precio) * producto.cantidad + this.total; 
-      });
+    this.pedido.productos.forEach(producto => {
+      this.total = (producto.producto.precio) * producto.cantidad + this.total;
+    });
   }
 
   getCantidad() {
     this.cantidad = 0
-      this.pedido.productos.forEach( producto => {
-            this.cantidad =  producto.cantidad + this.cantidad; 
-      });
+    this.pedido.productos.forEach(producto => {
+      this.cantidad = producto.cantidad + this.cantidad;
+    });
   }
 
   async pedir() {
     if (!this.pedido.productos.length) {
       console.log('añade items al carrito');
-      this.agrega ='Añade items al carrito'
+      this.agrega = 'Añade items al carrito'
       return;
     }
     this.pedido.fecha = new Date();
     this.pedido.precioTotal = this.total;
     this.pedido.uid = this.authService.getId();
     const uid = await this.authService.getUid()
-    const path = 'Clientes/' + uid + '/pedidos/' 
+    const path = 'Clientes/' + uid + '/pedidos/'
     console.log(' pedir() -> ', this.pedido, uid, path);
-    this.authService.createDoc(this.pedido, path, this.pedido.uid).then( () => {
-         console.log('guadado con exito');
-         this.carritoService.clearCarrito() ;
+    this.authService.createDoc(this.pedido, path, this.pedido.uid).then(() => {
+      console.log('guadado con exito');
+      this.carritoService.clearCarrito();
     });
 
-   
+
   }
 
 }

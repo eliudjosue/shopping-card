@@ -10,55 +10,55 @@ import { Cliente } from '../models/cliente.model';
 })
 export class AuthService {
 
- public cliente: Cliente;
+  public cliente: Cliente;
   constructor(
     private afauth: AngularFireAuth,
     public database: AngularFirestore) {
-      this.cliente = {
-        uid: '',
-        email:'',
-        nombre:'',
-        foto:'',
-        referencia:''
-      }
-      this.getUid();
-     }
-   
-    createDoc(data:any, path:string, id:string){
-      const collection = this.database.collection(path);      
-      return collection.doc(id).set(data);
+    this.cliente = {
+      uid: '',
+      email: '',
+      nombre: '',
+      foto: '',
+      referencia: ''
     }
+    this.getUid();
+  }
 
-    getDoc<type>(path: string, id: string) {
-      const collection = this.database.collection(path);      
-      return collection.doc(id).valueChanges();
-    }
+  createDoc(data: any, path: string, id: string) {
+    const collection = this.database.collection(path);
+    return collection.doc(id).set(data);
+  }
 
-    deleteDoc(path: string, id: string) {
-      const collection = this.database.collection(path);      
-      return collection.doc(id).delete();
-    }
+  getDoc<type>(path: string, id: string) {
+    const collection = this.database.collection(path);
+    return collection.doc(id).valueChanges();
+  }
 
-    updateDoc(data:any, path: string, id: string) {
-      const collection = this.database.collection(path);      
-      return collection.doc(id).update(data);
-    }
+  deleteDoc(path: string, id: string) {
+    const collection = this.database.collection(path);
+    return collection.doc(id).delete();
+  }
 
-    getId(){
-      return this.database.createId();
-    }
+  updateDoc(data: any, path: string, id: string) {
+    const collection = this.database.collection(path);
+    return collection.doc(id).update(data);
+  }
 
-    getCollection<tipo>(path: string){
-      const collection = this.database.collection<tipo>(path);
-      return collection.valueChanges();
-    }
+  getId() {
+    return this.database.createId();
+  }
 
-    
+  getCollection<tipo>(path: string) {
+    const collection = this.database.collection<tipo>(path);
+    return collection.valueChanges();
+  }
 
 
 
-//Login, Register, Login con google
-  async register(email: string, password: string){
+
+
+  //Login, Register, Login con google
+  async register(email: string, password: string) {
     try {
       return await this.afauth.createUserWithEmailAndPassword(email, password);
     } catch (error) {
@@ -66,9 +66,9 @@ export class AuthService {
       return null;
     }
   }
-  
 
-  async login(email: string, password: string){
+
+  async login(email: string, password: string) {
     try {
       return await this.afauth.signInWithEmailAndPassword(email, password);
     } catch (error) {
@@ -77,7 +77,7 @@ export class AuthService {
     }
   }
 
-  async loginWithGoogle(email: string, password: string){
+  async loginWithGoogle(email: string, password: string) {
     try {
       return await this.afauth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     } catch (error) {
@@ -86,15 +86,15 @@ export class AuthService {
     }
   }
 
-  getUserLogged(){
+  getUserLogged() {
     return this.afauth.authState;
   }
 
-  logOut(){
+  logOut() {
     this.afauth.signOut();
   }
 
-  async getUid(){
+  async getUid() {
     const user = await this.afauth.currentUser;
     if (user === null) {
       return null;
@@ -104,16 +104,16 @@ export class AuthService {
   }
 
 
-  stateAuth(){
-  return this.afauth.authState
+  stateAuth() {
+    return this.afauth.authState
   }
 
 
-getCollectionQuery<tipo>(path: string, parametro: string, condicion: any, busqueda: string) {
-  const collection = this.database.collection<tipo>(path, 
-    ref => ref.where( parametro, condicion, busqueda));
-  return collection.valueChanges();
-}
+  getCollectionQuery<tipo>(path: string, parametro: string, condicion: any, busqueda: string) {
+    const collection = this.database.collection<tipo>(path,
+      ref => ref.where(parametro, condicion, busqueda));
+    return collection.valueChanges();
+  }
 
 
 }

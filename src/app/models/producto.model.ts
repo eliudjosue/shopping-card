@@ -1,10 +1,10 @@
 export interface Producto {
     nombre: string;
-    precio:number;
-    description:string;
-    foto:string;
-    id:string;
-    fecha:Date;
+    precio: number;
+    description: string;
+    foto: string;
+    id: string;
+    fecha: Date;
 }
 
 

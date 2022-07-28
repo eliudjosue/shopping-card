@@ -17,45 +17,43 @@ export class MisPedidosComponent implements OnInit {
   constructor(public authService: AuthService) {
     this.nuevosSuscriber = new Subscription;
     this.culmidadosSuscriber = new Subscription;
-   }
-              
+  }
+
 
   ngOnInit() {
-      this.getPedidosNuevos();
+    this.getPedidosNuevos();
   }
 
   ngOnDestroy() {
-     if (this.nuevosSuscriber) {
-        this.nuevosSuscriber.unsubscribe();
-     }
-     if (this.culmidadosSuscriber) {
-        this.culmidadosSuscriber.unsubscribe();
-     }
+    if (this.nuevosSuscriber) {
+      this.nuevosSuscriber.unsubscribe();
+    }
+    if (this.culmidadosSuscriber) {
+      this.culmidadosSuscriber.unsubscribe();
+    }
   }
 
 
 
   changeSegment(ev: any) {
-    //  console.log('changeSegment()', ev.detail.value);
-     const opc = ev.detail.value;
-     console.log(ev.detail.value)
-     if (opc === 'culminados') {
-       this.getPedidosCulminados();
-     }
-     if (opc === 'nuevos') {
-          this.getPedidosNuevos();
+    const opc = ev.detail.value;
+    console.log(ev.detail.value)
+    if (opc === 'culminados') {
+      this.getPedidosCulminados();
+    }
+    if (opc === 'nuevos') {
+      this.getPedidosNuevos();
     }
   }
 
   async getPedidosNuevos() {
-    // console.log('getPedidosNuevos()');
     const uid = await this.authService.getUid();
     const path = 'Clientes/' + uid + '/pedidos/';
-    this.nuevosSuscriber = this.authService.getCollectionQuery<Pedido>(path, 'estado', '==', 'enviado').subscribe( res => {
-          if (res.length) {
-                console.log('getPedidosNuevos() -> res ', res);
-                this.pedidos = res;
-          }
+    this.nuevosSuscriber = this.authService.getCollectionQuery<Pedido>(path, 'estado', '==', 'enviado').subscribe(res => {
+      if (res.length) {
+        console.log('getPedidosNuevos() -> res ', res);
+        this.pedidos = res;
+      }
     });
 
   }
@@ -64,11 +62,11 @@ export class MisPedidosComponent implements OnInit {
     console.log('getPedidosCulminados()');
     const uid = await this.authService.getUid();
     const path = 'Clientes/' + uid + '/pedidos/';
-    this.culmidadosSuscriber = this.authService.getCollectionQuery<Pedido>(path, 'estado', '==', 'entregado').subscribe( res => {
-          if (res.length) {
-                console.log('getPedidosCulminados() -> res ', res);
-                this.pedidos = res;
-          }
+    this.culmidadosSuscriber = this.authService.getCollectionQuery<Pedido>(path, 'estado', '==', 'entregado').subscribe(res => {
+      if (res.length) {
+        console.log('getPedidosCulminados() -> res ', res);
+        this.pedidos = res;
+      }
     });
 
   }

@@ -11,17 +11,17 @@ export class NavbarComponent implements OnInit {
   userLogget = this.authService.getUserLogged()
   constructor(
     private authService: AuthService,
-    private router: Router 
-    ) { }
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }
 
 
-  logOut(){
+  logOut() {
     this.authService.logOut();
     this.router.navigate(['/login']);
   }
 
- 
+
 }

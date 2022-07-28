@@ -9,7 +9,7 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   title = 'shopping-cart';
 
-  constructor( private authService: AuthService){
-   
+  constructor(private authService: AuthService) {
+
   }
 }

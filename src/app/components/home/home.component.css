@@ -1,13 +1,9 @@
-.content{
-background-color: #ccc;
-display: flex;
-justify-content: center;
-display: grid;
+.content {
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  display: grid;
   grid-template-columns: 3fr;
   grid-template-rows: auto;
   scroll-behavior: smooth;
-}
-
-.item{
-  
 }

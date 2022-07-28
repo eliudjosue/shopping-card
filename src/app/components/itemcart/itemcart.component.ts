@@ -10,11 +10,11 @@ import { CarritoService } from 'src/app/services/carrito.service';
 })
 export class ItemcartComponent implements OnInit {
 
- 
-producto: Producto
+
+  producto: Producto
   ngOnInit(): void {
   }
-  
+
 
   @Input() productoPedido: ProductoPedido;
   @Input() botones = true;
@@ -23,32 +23,25 @@ producto: Producto
 
     this.producto = {
       nombre: '',
-    precio:0,
-    description:'',
-    foto:'',
-    id:'',
-    fecha:new Date(),
-    } 
-    
-    this.productoPedido = {
-      producto: this.producto,
-      cantidad:0
+      precio: 0,
+      description: '',
+      foto: '',
+      id: '',
+      fecha: new Date(),
     }
 
-    
-
-
-   }
-
-
+    this.productoPedido = {
+      producto: this.producto,
+      cantidad: 0
+    }
+  }
 
   addCarrito() {
-    console.log('addCarrito()');
     this.carritoService.addProducto(this.productoPedido.producto);
   }
 
   removeCarrito() {
-      this.carritoService.removeProducto(this.productoPedido.producto);
+    this.carritoService.removeProducto(this.productoPedido.producto);
   }
 
 }

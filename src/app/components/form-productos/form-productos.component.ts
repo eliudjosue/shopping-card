@@ -13,40 +13,40 @@ export class FormProductosComponent implements OnInit {
 
   private path = 'products/'
   cliente: Cliente;
-  newFile:any;
-  uid='';
+  newFile: any;
+  uid = '';
   constructor(public firestoreService: AuthService,
-              public storageService: StorageService) {
-                this.cliente = {
-                  uid: '',
-                  email:'',
-                  nombre:'',
-                  foto:'',
-                  referencia:''
-                }
-            
-   
-               }
+    public storageService: StorageService) {
+    this.cliente = {
+      uid: '',
+      email: '',
+      nombre: '',
+      foto: '',
+      referencia: ''
+    }
+
+
+  }
 
   ngOnInit(): void {
     this.getProductos()
   }
 
-  newImage=''
+  newImage = ''
 
 
 
   productos: Producto[] = [];
   newProducto: Producto = {
-    nombre:'',
-    precio:0,
-    description:'',
-    foto:'',
-    id:this.firestoreService.getId(),
+    nombre: '',
+    precio: 0,
+    description: '',
+    foto: '',
+    id: this.firestoreService.getId(),
     fecha: new Date,
   }
 
- async guardarProducto(){
+  async guardarProducto() {
     this.firestoreService.createDoc(this.newProducto, this.path, this.newProducto.id)
     const path = 'Productos';
     const name = 'prueba'
@@ -62,20 +62,20 @@ export class FormProductosComponent implements OnInit {
 
   getProductos() {
     this.firestoreService.getCollection<Producto>(this.path).subscribe(res => {
-    this.productos = res
+      this.productos = res
     })
   }
-  deleteProduct(producto: Producto){
+  deleteProduct(producto: Producto) {
     this.firestoreService.deleteDoc(this.path, producto.id);
   }
 
- async uploadImage(event:any){
-    
-    if(event.target.files && event.target.files[0]){
-     this.newFile = event.target.files[0];
+  async uploadImage(event: any) {
+
+    if (event.target.files && event.target.files[0]) {
+      this.newFile = event.target.files[0];
       const reader = new FileReader();
       reader.onload = ((image) => {
-                    this.newProducto.foto = image.target?.result as string;
+        this.newProducto.foto = image.target?.result as string;
       });
       reader.readAsDataURL(event.target.files[0]);
     }

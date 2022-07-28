@@ -13,48 +13,46 @@ import { CarritoService } from 'src/app/services/carrito.service';
 
 
 export class HomeComponent implements OnInit {
-uid= ''
+  uid = ''
 
 
- private path = 'products/'
- public productos: Producto[]=[];
- producto : Producto
- productoPedido: ProductoPedido
+  private path = 'products/'
+  public productos: Producto[] = [];
+  producto: Producto
+  productoPedido: ProductoPedido
 
   constructor(public authService: AuthService,
-              public carritoService: CarritoService) { 
-                this.loadProductos();
-                this.producto = {
-                  nombre: 'string',
-                  precio:0,
-                  description:'',
-                  foto:'',
-                  id:'',
-                  fecha:new Date(),
-                                };
-                                
-                                this.productoPedido = {
-                                  producto: this.producto,
-                                   cantidad:0
-                                }
-   
-   }
+    public carritoService: CarritoService) {
+    this.loadProductos();
+    this.producto = {
+      nombre: 'string',
+      precio: 0,
+      description: '',
+      foto: '',
+      id: '',
+      fecha: new Date(),
+    };
+
+    this.productoPedido = {
+      producto: this.producto,
+      cantidad: 0
+    }
+
+  }
 
   ngOnInit(): void {
   }
- 
-  loadProductos(){
-    this.authService.getCollection<Producto>(this.path).subscribe( res => {
-      // console.log(res)
+
+  loadProductos() {
+    this.authService.getCollection<Producto>(this.path).subscribe(res => {
       this.productos = res
     })
   }
 
-  getUserInfo(uid: string){
-    const path= 'Clientes';
-    this.authService.getDoc<Producto>(path,uid).subscribe( res => {
+  getUserInfo(uid: string) {
+    const path = 'Clientes';
+    this.authService.getDoc<Producto>(path, uid).subscribe(res => {
       res = this.producto
     })
   }
 }
- 

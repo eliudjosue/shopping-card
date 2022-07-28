@@ -1,10 +1,9 @@
-
 .example-header-image {
   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
 }
 
-.grid{
+.grid {
   margin: 20px;
   text-align: center;
 }

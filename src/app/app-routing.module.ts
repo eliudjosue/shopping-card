@@ -8,14 +8,14 @@ import { MisPedidosComponent } from './components/mis-pedidos/mis-pedidos.compon
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
 const routes: Routes = [
-  { pathMatch:'full', path:'', redirectTo:'home'},
-  { path:'login', component:LoginComponent},
-  { path: 'home', component:HomeComponent},
-  { path:'form-produc', component:FormProductosComponent},
-  { path:'cart', component:CartComponent},
-  { path: 'mis-pedidos', component:MisPedidosComponent},
-  { path:'**', component:NotFoundComponent},
-  
+  { pathMatch: 'full', path: '', redirectTo: 'home' },
+  { path: 'login', component: LoginComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'form-produc', component: FormProductosComponent },
+  { path: 'cart', component: CartComponent },
+  { path: 'mis-pedidos', component: MisPedidosComponent },
+  { path: '**', component: NotFoundComponent },
+
 ];
 
 @NgModule({
