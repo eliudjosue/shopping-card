@@ -1,29 +1,13 @@
 <mat-tab-group>
 
-    <mat-tab label="First" (cdkAutofill)="$event" value="culminados">  
+    <mat-tab label="Mis pedidos" (cdkAutofill)="$event" value="culminados">  
 
       <mat-card *ngFor="let pedido of pedidos" class="mt-5 mb-5 item-card">
         <mat-card-content class="item-estado">
           <label class="normal">
               Estado: {{pedido.estado}}
               <p>
-                fecha: {{pedido.fecha.seconds | date }}
-              </p>
-          </label>
-        </mat-card-content>
-        <app-itemcart *ngFor="let producto of pedido.productos"  
-        [productoPedido]="producto" [botones]='false'></app-itemcart>
-      </mat-card>
-    </mat-tab>
- 
-    
-    <mat-tab label="Second" (cdkAutofill)="$event"  value="nuevos"> 
-      <mat-card *ngFor="let pedido of pedidos" class="mt-5 mb-5 item-card">
-        <mat-card-content class="item-estado">
-          <label class="normal">
-              Estado: {{pedido.estado}}
-              <p>
-                fecha: {{pedido.fecha.seconds | date }}
+                Id: {{pedido.uid}}
               </p>
           </label>
         </mat-card-content>
@@ -35,22 +19,9 @@
   
 
 
-  
     
   
   
-    <mat-card *ngFor="let pedido of pedidos" class="mt-5 mb-5 item-card">
-      <mat-card-content class="item-estado">
-        <label class="normal">
-            Estado: {{pedido.estado}}
-            <p>
-              fecha: {{pedido.fecha.seconds | date }}
-            </p>
-        </label>
-      </mat-card-content>
-      <app-itemcart *ngFor="let producto of pedido.productos"  
-      [productoPedido]="producto" [botones]=false></app-itemcart>
-    </mat-card>
-  
+    
     
   

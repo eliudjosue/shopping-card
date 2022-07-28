@@ -26,7 +26,7 @@ clienteSubscriber:Subscription;
               public router: Router) {
       this.initCarrito();
       this.authService.stateAuth().subscribe( res => {
-      console.log(res);
+      // console.log(res);
       if (res !== null) {
         this.uid = res.uid;
         // console.log(res.uid)
@@ -66,9 +66,9 @@ clienteSubscriber:Subscription;
       this.carritoSubscribe.unsubscribe()
     }
     this.carritoSubscribe = this.authService.getDoc<Pedido>(path, this.uid).subscribe( res => {
-      console.log(res);
+      // console.log(res);
       if (res) {
-        res = this.pedido;
+        // res = this.pedido;
         this.pedido$.next(this.pedido);
       } else {
         this.initCarrito();
@@ -92,7 +92,7 @@ clienteSubscriber:Subscription;
     const path = 'Clientes';
     this.clienteSubscriber = this.authService.getDoc<Cliente>(path, this.uid).subscribe( res  => {
        res = this.pedido;
-       console.log('loadCliente() -->', res); 
+      //  console.log('loadCliente() -->', res); 
         this.loadCarrito();
         this.clienteSubscriber.unsubscribe();
 
@@ -133,7 +133,7 @@ clienteSubscriber:Subscription;
    }
 
    removeProducto(producto: Producto) {
-    console.log('removeProducto ->', this.uid);
+    // console.log('removeProducto ->', this.uid);
     if (this.uid.length) {
         let position = 0;
         const item = this.pedido.productos.find( (productoPedido, index) => {
@@ -145,10 +145,10 @@ clienteSubscriber:Subscription;
             if (item.cantidad === 0) {
                  this.pedido.productos.splice(position, 1);
             }
-            console.log('en remove pedido -> ', this.pedido);
+            // console.log('en remove pedido -> ', this.pedido);
             const path = 'Clientes/' + this.uid + '/' + this.path;
             this.authService.createDoc(this.pedido, path, this.uid).then( () => {
-                console.log('removido con exito');
+                // console.log('removido con exito');
             });
         }
     }

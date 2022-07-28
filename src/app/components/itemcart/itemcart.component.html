@@ -4,9 +4,9 @@
     <mat-card-title>{{productoPedido.producto.nombre}}</mat-card-title>
     <mat-card-subtitle>Descripcion: {{productoPedido.producto.description}}</mat-card-subtitle>
     <mat-card-subtitle>Cantidad: {{productoPedido.cantidad}}</mat-card-subtitle>
-    <mat-card-subtitle>Precio:$ {{productoPedido.producto.precio}}}</mat-card-subtitle>
-   
-      <div class="example-button-container">
+    <mat-card-subtitle>Precio:$ {{productoPedido.producto.precio}}</mat-card-subtitle>
+   <div class="btn"  *ngIf="botones">
+         <div class="example-button-container">
         <button mat-fab color="primary" aria-label="Example icon button with a delete icon"  (click)="addCarrito()">
           <mat-icon>add</mat-icon>
         </button>
@@ -19,6 +19,8 @@
           <mat-icon>remove</mat-icon>
         </button>
       </div>
+   </div>
+ 
     
   </mat-card-title-group>
  

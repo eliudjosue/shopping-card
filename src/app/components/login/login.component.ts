@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  operationType = ''
   constructor(
     private authService: AuthService,
     private router: Router) { }
@@ -22,18 +22,25 @@ export class LoginComponent implements OnInit {
   }
 
   Ingresar(){
-    console.log(this.usuario);
     const { email, password } = this.usuario;
     this.authService.login(email, password).then(res => {
       console.log("Ingreso :", res);
-      this.router.navigate(['/home']);
+      if (res?.operationType == 'signIn') {
+         this.router.navigate(['/home']);
+      }
+    }).catch( err =>{
+      console.log(err)
     })
+    
   }
 
   Registrar(){
     console.log(this.usuario);
     const { email, password } = this.usuario;
     this.authService.register(email, password).then(res => {
+      if (res?.operationType == 'signIn') {
+        this.router.navigate(['/home']);
+     }
       console.log("Se registro :", res)
   })
 }

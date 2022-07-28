@@ -54,7 +54,7 @@ carritoSuscriber: Subscription
   ngOnInit() {}
 
   ngOnDestroy() {
-      console.log('ngOnDestroy() - carrito componente');
+      // console.log('ngOnDestroy() - carrito componente');
       if (this.carritoSuscriber) {
          this.carritoSuscriber.unsubscribe();
       }
@@ -68,7 +68,7 @@ carritoSuscriber: Subscription
 
   loadPedido(){
   this.carritoSuscriber = this.carritoService.getCarrito().subscribe( res => {
-    console.log('loadPedido() en carito', res);
+    // console.log('loadPedido() en carito', res);
     this.pedido = res;
     this.getCantidad();
     this.getTotal()
@@ -97,7 +97,7 @@ carritoSuscriber: Subscription
 
   async pedir() {
     if (!this.pedido.productos.length) {
-      console.log('añade items al carrito');
+      // console.log('añade items al carrito');
       return;
     }
     this.pedido.fecha = new Date();

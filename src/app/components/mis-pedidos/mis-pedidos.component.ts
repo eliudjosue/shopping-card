@@ -48,7 +48,7 @@ export class MisPedidosComponent implements OnInit {
   }
 
   async getPedidosNuevos() {
-    console.log('getPedidosNuevos()');
+    // console.log('getPedidosNuevos()');
     const uid = await this.authService.getUid();
     const path = 'Clientes/' + uid + '/pedidos/';
     this.nuevosSuscriber = this.authService.getCollectionQuery<Pedido>(path, 'estado', '==', 'enviado').subscribe( res => {

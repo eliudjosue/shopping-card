@@ -26,7 +26,7 @@ export class ProductoComponent implements OnInit {
   }
   
   addCarrito() {
-    console.log('addCarrito()');
+    // console.log('addCarrito()');
     this.carritoService.addProducto(this.producto);
 }
 
