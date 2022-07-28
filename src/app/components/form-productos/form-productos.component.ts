@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Cliente } from 'src/app/models/cliente.model';
 import { Producto } from 'src/app/models/producto.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -11,16 +12,28 @@ import { StorageService } from 'src/app/services/storage.service';
 export class FormProductosComponent implements OnInit {
 
   private path = 'products/'
-
+  cliente: Cliente;
+  newFile:any;
+  uid='';
   constructor(public firestoreService: AuthService,
-              public storageService: StorageService) { }
+              public storageService: StorageService) {
+                this.cliente = {
+                  uid: '',
+                  email:'',
+                  nombre:'',
+                  foto:'',
+                  referencia:''
+                }
+            
+   
+               }
 
   ngOnInit(): void {
     this.getProductos()
   }
 
   newImage=''
-  newFile= ''
+
 
 
   productos: Producto[] = [];
@@ -57,11 +70,12 @@ export class FormProductosComponent implements OnInit {
   }
 
  async uploadImage(event:any){
-    this.newFile = event.target.files[0];
+    
     if(event.target.files && event.target.files[0]){
+     this.newFile = event.target.files[0];
       const reader = new FileReader();
       reader.onload = ((image) => {
-        this.newImage = image.target?.result as string;
+                    this.newProducto.foto = image.target?.result as string;
       });
       reader.readAsDataURL(event.target.files[0]);
     }

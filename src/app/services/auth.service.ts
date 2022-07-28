@@ -108,16 +108,6 @@ export class AuthService {
   return this.afauth.authState
   }
 
-//   async getInfoUser() {
-//     const uid = await this.getUid();
-//     const path = 'Clientes';  
-//     this.getDoc<Cliente>(path, uid).subscribe( res => {
-//           if (res !== undefined) {
-//             res = this.cliente;
-//                 // console.log('datosCliente ->' , this.datosCliente);
-//           }
-//     });
-// }
 
 getCollectionQuery<tipo>(path: string, parametro: string, condicion: any, busqueda: string) {
   const collection = this.database.collection<tipo>(path, 

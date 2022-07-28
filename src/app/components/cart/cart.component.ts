@@ -12,7 +12,7 @@ import { CarritoService } from 'src/app/services/carrito.service';
 })
 export class CartComponent implements OnInit {
 
- 
+ agrega=''
 
   pedido: Pedido;
   cliente:Cliente;
@@ -25,7 +25,7 @@ carritoSuscriber: Subscription
               public carritoService: CarritoService,
               ){
                 this.carritoSuscriber = new Subscription
-            // this.initCarrito();
+    
             this.initCarrito();
             this.loadPedido();
 
@@ -61,10 +61,7 @@ carritoSuscriber: Subscription
   }
 
 
-  // openMenu() {
-  //     console.log('open menu');
-      
-  // }
+
 
   loadPedido(){
   this.carritoSuscriber = this.carritoService.getCarrito().subscribe( res => {
@@ -97,7 +94,8 @@ carritoSuscriber: Subscription
 
   async pedir() {
     if (!this.pedido.productos.length) {
-      // console.log('añade items al carrito');
+      console.log('añade items al carrito');
+      this.agrega ='Añade items al carrito'
       return;
     }
     this.pedido.fecha = new Date();

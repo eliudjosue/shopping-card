@@ -37,13 +37,6 @@ uid= ''
                                   producto: this.producto,
                                    cantidad:0
                                 }
-
-            // this.authService.stateAuth().subscribe( res => {
-            //   if(res !== null){
-            //   this.uid = res.uid;
-            //   this.getUserInfo(this.uid)
-            //  }
-            // })
    
    }
 
@@ -56,11 +49,6 @@ uid= ''
       this.productos = res
     })
   }
-
-  // addCart(){
-  //    console.log(this.productoPedido.producto)
-  //  this.carritoService.addProducto<Producto>(this.productoPedido.producto)
-  // }
 
   getUserInfo(uid: string){
     const path= 'Clientes';
