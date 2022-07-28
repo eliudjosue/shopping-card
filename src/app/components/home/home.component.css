@@ -1,15 +1,13 @@
-.grid{
-  height: 100vh;
-}
-.example-card {
-  max-width: 400px;
-  gap: 20px;
-  align-items: center;
-  margin-top: 20px;
-  
+.content{
+background-color: #ccc;
+display: flex;
+justify-content: center;
+display: grid;
+  grid-template-columns: 3fr;
+  grid-template-rows: auto;
+  scroll-behavior: smooth;
 }
 
-.example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-  background-size: cover;
+.item{
+  
 }

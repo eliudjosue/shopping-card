@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service'
-import { find } from 'rxjs/operators'
+
 import { Pedido } from '../models/pedido.model';
 import { Cliente } from '../models/cliente.model';
 import { EstadoPedido, Producto } from '../models/producto.model';
 import { ProductoPedido } from '../models/productoPedido.model';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,11 +17,14 @@ export class CarritoService {
   path = 'carrito/';
   uid = '';
   public cliente: Cliente;
-  
+
+carritoSubscribe: Subscription;
+clienteSubscriber:Subscription;
+ 
 
   constructor(public authService: AuthService,
               public router: Router) {
-      this.initCarrito()
+      this.initCarrito();
       this.authService.stateAuth().subscribe( res => {
       console.log(res);
       if (res !== null) {
@@ -30,6 +33,9 @@ export class CarritoService {
         this.loadCliente();
       }
     });
+
+   this.carritoSubscribe = new Subscription;
+   this.clienteSubscriber =new Subscription;
 
     this.cliente = {
     uid: '',
@@ -56,7 +62,10 @@ export class CarritoService {
 
    loadCarrito(){
     const path = 'Clientes/' +  this.uid + '/' + 'carrito';
-    this.authService.getDoc(path, this.uid).subscribe( res => {
+    if(this.carritoSubscribe){
+      this.carritoSubscribe.unsubscribe()
+    }
+    this.carritoSubscribe = this.authService.getDoc<Pedido>(path, this.uid).subscribe( res => {
       console.log(res);
       if (res) {
         res = this.pedido;
@@ -68,14 +77,25 @@ export class CarritoService {
    }
 
    initCarrito() {
-    this.pedido 
+    this.pedido = {
+      uid:'',
+      cliente:this.cliente,
+      productos: [],
+      precioTotal:0,
+      estado:'enviado',
+      fecha:new Date(),
+      valoracion:0,
+    }
     }
 
    loadCliente(){
     const path = 'Clientes';
-    this.authService.getDoc<Pedido>(path, this.uid).subscribe( res  => {
-        res = this.pedido 
-        this.loadCarrito()      
+    this.clienteSubscriber = this.authService.getDoc<Cliente>(path, this.uid).subscribe( res  => {
+       res = this.pedido;
+       console.log('loadCliente() -->', res); 
+        this.loadCarrito();
+        this.clienteSubscriber.unsubscribe();
+
     })
    }
 
@@ -86,7 +106,7 @@ export class CarritoService {
    return this.pedido$.asObservable()
    }
 
-   addProducto<type>(producto: Producto){
+   addProducto(producto: Producto){
     if (this.uid.length) {
       const item = this.pedido.productos.find( productoPedido => {
         return (productoPedido.producto.id === producto.id)
@@ -96,7 +116,7 @@ export class CarritoService {
       }else{
         const add: ProductoPedido = {
           cantidad: 1,
-          producto:producto 
+          producto:producto, 
         };
         this.pedido.productos.push(add);
         }
@@ -104,6 +124,7 @@ export class CarritoService {
       this.router.navigate(['/login']);
       return
     }
+    this.pedido$.next(this.pedido);
     // console.log('en add pedido --> ', this.pedido);
     const  path = 'Clientes/' + this.uid + '/' + this.path;
     this.authService.createDoc(this.pedido, path, this.uid).then( () => {
@@ -142,7 +163,7 @@ export class CarritoService {
    clearCarrito() {
     const path = 'Clientes/' + this.uid + '/' + 'carrito';
     this.authService.deleteDoc(path, this.uid).then( () => {
-        this.initCarrito();
+         this.initCarrito();
     });
 }
 }

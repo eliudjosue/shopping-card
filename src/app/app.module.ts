@@ -32,6 +32,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { ProductoComponent } from './components/producto/producto.component';
 
 import { ItemcartComponent } from './components/itemcart/itemcart.component';
+import { MisPedidosComponent } from './components/mis-pedidos/mis-pedidos.component';
 
 
 
@@ -47,6 +48,7 @@ import { ItemcartComponent } from './components/itemcart/itemcart.component';
     CartComponent,
     ProductoComponent,
     ItemcartComponent,
+    MisPedidosComponent,
    
   ],
   imports: [

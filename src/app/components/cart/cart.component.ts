@@ -16,14 +16,15 @@ export class CartComponent implements OnInit {
 
   pedido: Pedido;
   cliente:Cliente;
- 
+carritoSuscriber: Subscription
  
   total:number;
   cantidad: number;
 
   constructor(public authService:AuthService,
-              public carritoService: CarritoService){
-
+              public carritoService: CarritoService,
+              ){
+                this.carritoSuscriber = new Subscription
             // this.initCarrito();
             this.initCarrito();
             this.loadPedido();
@@ -52,12 +53,12 @@ export class CartComponent implements OnInit {
 
   ngOnInit() {}
 
-  // ngOnDestroy() {
-  //     console.log('ngOnDestroy() - carrito componente');
-  //     if (this.carritoSuscriber) {
-  //        this.carritoSuscriber.unsubscribe();
-  //     }
-  // }
+  ngOnDestroy() {
+      console.log('ngOnDestroy() - carrito componente');
+      if (this.carritoSuscriber) {
+         this.carritoSuscriber.unsubscribe();
+      }
+  }
 
 
   // openMenu() {
@@ -66,9 +67,9 @@ export class CartComponent implements OnInit {
   // }
 
   loadPedido(){
-  this.carritoService.getCarrito().subscribe( res => {
+  this.carritoSuscriber = this.carritoService.getCarrito().subscribe( res => {
+    console.log('loadPedido() en carito', res);
     this.pedido = res;
-    console.log(res)
     this.getCantidad();
     this.getTotal()
   })
@@ -81,12 +82,14 @@ export class CartComponent implements OnInit {
     
 
   getTotal() {
+    this.total = 0
       this.pedido.productos.forEach( producto => {
            this.total = (producto.producto.precio) * producto.cantidad + this.total; 
       });
   }
 
   getCantidad() {
+    this.cantidad = 0
       this.pedido.productos.forEach( producto => {
             this.cantidad =  producto.cantidad + this.cantidad; 
       });
@@ -105,7 +108,7 @@ export class CartComponent implements OnInit {
     console.log(' pedir() -> ', this.pedido, uid, path);
     this.authService.createDoc(this.pedido, path, this.pedido.uid).then( () => {
          console.log('guadado con exito');
-         this.carritoService.clearCarrito();
+         this.carritoService.clearCarrito() ;
     });
 
    

@@ -4,6 +4,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { FormProductosComponent } from './components/form-productos/form-productos.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import { MisPedidosComponent } from './components/mis-pedidos/mis-pedidos.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'home', component:HomeComponent},
   { path:'form-produc', component:FormProductosComponent},
   { path:'cart', component:CartComponent},
+  { path: 'mis-pedidos', component:MisPedidosComponent},
   { path:'**', component:NotFoundComponent},
   
 ];

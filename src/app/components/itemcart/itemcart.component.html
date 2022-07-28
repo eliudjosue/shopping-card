@@ -1,9 +1,10 @@
-
-<mat-card class="example-card">
+<div class="content">
+  <mat-card class="example-card">
   <mat-card-title-group>
     <mat-card-title>{{productoPedido.producto.nombre}}</mat-card-title>
-    <mat-card-subtitle>{{productoPedido.cantidad}}</mat-card-subtitle>
-
+    <mat-card-subtitle>Descripcion: {{productoPedido.producto.description}}</mat-card-subtitle>
+    <mat-card-subtitle>Cantidad: {{productoPedido.cantidad}}</mat-card-subtitle>
+    <mat-card-subtitle>Precio:$ {{productoPedido.producto.precio}}}</mat-card-subtitle>
    
       <div class="example-button-container">
         <button mat-fab color="primary" aria-label="Example icon button with a delete icon"  (click)="addCarrito()">
@@ -20,10 +21,10 @@
       </div>
     
   </mat-card-title-group>
-  <mat-card-content>
-   {{productoPedido.producto.precio}}
-  </mat-card-content>
+ 
 </mat-card>
+</div>
+
 
 
 <!-- <p class="normal m-2">Precio: {{productoPedido.producto.nombre}}</p>
