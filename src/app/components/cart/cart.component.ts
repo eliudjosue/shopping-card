@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Cliente } from 'src/app/models/cliente.model';
 import { Pedido } from 'src/app/models/pedido.model';
@@ -10,7 +12,7 @@ import { CarritoService } from 'src/app/services/carrito.service';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
 
   agrega = ''
 
@@ -21,14 +23,19 @@ export class CartComponent implements OnInit {
   total: number;
   cantidad: number;
 
+  message = 'Pedido creado';
+  action = 'con exito!!'
+
   constructor(public authService: AuthService,
     public carritoService: CarritoService,
+    public router: Router,
+    public snackBar: MatSnackBar
   ) {
     this.carritoSuscriber = new Subscription
-
-    this.initCarrito();
+    
     this.loadPedido();
-
+    this.initCarrito();
+    
     this.total = 0
     this.cantidad = 0
 
@@ -65,6 +72,7 @@ export class CartComponent implements OnInit {
   loadPedido() {
     this.carritoSuscriber = this.carritoService.getCarrito().subscribe(res => {
       this.pedido = res;
+      console.log(this.pedido)
       this.getCantidad();
       this.getTotal()
     })
@@ -107,7 +115,19 @@ export class CartComponent implements OnInit {
       this.carritoService.clearCarrito();
     });
 
+    this.openSnackBar(this.message, this.action)
 
+    setTimeout(() => {
+      this.router.navigate(['/mis-pedidos'])
+    }, 1500);
+    
   }
 
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 1000,
+    });
+  }
+
+ 
 }

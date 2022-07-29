@@ -22,6 +22,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { FormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 //firebase
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
@@ -62,6 +63,7 @@ import { MisPedidosComponent } from './components/mis-pedidos/mis-pedidos.compon
     MatIconModule,
     MatToolbarModule,
     MatMenuModule,
+    MatSnackBarModule,
     FormsModule,
     MatListModule,
     MatGridListModule,

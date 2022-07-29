@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Producto } from 'src/app/models/producto.model';
 import { CarritoService } from 'src/app/services/carrito.service';
+
 
 @Component({
   selector: 'app-producto',
@@ -11,7 +13,10 @@ export class ProductoComponent implements OnInit {
 
   @Input() producto: Producto;
 
-  constructor(public carritoService: CarritoService) {
+  message = 'Añadido';
+  action = 'con exito'
+  constructor(public carritoService: CarritoService,
+    public snackBar: MatSnackBar) {
     this.producto = {
       nombre: 'string',
       precio: 0,
@@ -27,6 +32,13 @@ export class ProductoComponent implements OnInit {
 
   addCarrito() {
     this.carritoService.addProducto(this.producto);
+    this.openSnackBar(this.message, this.action)
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 
 

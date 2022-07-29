@@ -8,10 +8,13 @@
     </mat-card-content>
 
     <mat-card-subtitle>${{producto.precio}}</mat-card-subtitle>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
-      (click)="addCarrito()">
-      <mat-icon>shopping_cart</mat-icon>
-    </button>
 
+    <mat-card-content>
+      <button mat-raised-button color="primary" (click)="addCarrito()">
+
+        <mat-label value="añadido">Añadir</mat-label>
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+    </mat-card-content>
   </mat-card>
 </div>

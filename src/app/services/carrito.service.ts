@@ -4,7 +4,7 @@ import { AuthService } from './auth.service'
 
 import { Pedido } from '../models/pedido.model';
 import { Cliente } from '../models/cliente.model';
-import { EstadoPedido, Producto } from '../models/producto.model';
+import { Producto } from '../models/producto.model';
 import { ProductoPedido } from '../models/productoPedido.model';
 import { Observable, Subject, Subscription } from 'rxjs';
 @Injectable({
@@ -12,11 +12,12 @@ import { Observable, Subject, Subscription } from 'rxjs';
 })
 export class CarritoService {
 
-  private pedido: Pedido;
+  pedido: Pedido;
   pedido$ = new Subject<Pedido>();
   path = 'carrito/';
   uid = '';
-  public cliente: Cliente;
+  cliente: Cliente;
+  
 
   carritoSubscribe: Subscription;
   clienteSubscriber: Subscription;
@@ -48,7 +49,7 @@ export class CarritoService {
 
 
     this.pedido = {
-      uid: '',
+      uid: this.uid,
       cliente: this.cliente,
       productos: [],
       precioTotal: 0,
@@ -69,7 +70,7 @@ export class CarritoService {
   loadCliente() {
     const path = 'Clientes';
     this.clienteSubscriber = this.authService.getDoc<Cliente>(path, this.uid).subscribe(res => {
-      res = this.pedido;
+      this.pedido == res
       this.loadCarrito();
       this.clienteSubscriber.unsubscribe();
 
@@ -93,7 +94,7 @@ export class CarritoService {
   getCarrito(): Observable<Pedido> {
     setTimeout(() => {
       this.pedido$.next(this.pedido);
-    }, 500);
+    }, 100);
     return this.pedido$.asObservable()
   }
 

@@ -1,9 +1,20 @@
 .content {
-  background-color: #ccc;
+  /* background-color: #ccc;
   display: flex;
   justify-content: center;
   display: grid;
   grid-template-columns: 3fr;
   grid-template-rows: auto;
-  scroll-behavior: smooth;
+  scroll-behavior: smooth; */
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  display: block;
+  float: left;
+  text-align: center;
+  width: 28%; 
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 30px;
+  margin-top: 10px;
 }
