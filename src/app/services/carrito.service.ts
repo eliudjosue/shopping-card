@@ -17,13 +17,14 @@ export class CarritoService {
   path = 'carrito/';
   uid = '';
   cliente: Cliente;
-  
-
-  carritoSubscribe: Subscription;
-  clienteSubscriber: Subscription;
 
 
-  constructor(public authService: AuthService,
+  carritoSubscribe: Subscription = new Subscription;
+  clienteSubscriber: Subscription = new Subscription;
+
+
+  constructor(
+    public authService: AuthService,
     public router: Router) {
     this.initCarrito();
     this.authService.stateAuth().subscribe(res => {
@@ -33,10 +34,9 @@ export class CarritoService {
 
         this.loadCliente();
       }
+
     });
 
-    this.carritoSubscribe = new Subscription;
-    this.clienteSubscriber = new Subscription;
 
     this.cliente = {
       uid: '',
@@ -64,13 +64,22 @@ export class CarritoService {
 
 
   initCarrito() {
-    this.pedido
+    this.pedido = {
+      uid: this.uid,
+      cliente: this.cliente,
+      productos: [],
+      precioTotal: 0,
+      estado: 'enviado',
+      fecha: new Date(),
+      valoracion: 0,
+    };
+    this.pedido$.next(this.pedido);
   }
 
   loadCliente() {
     const path = 'Clientes';
     this.clienteSubscriber = this.authService.getDoc<Cliente>(path, this.uid).subscribe(res => {
-      this.pedido == res
+      this.cliente == res
       this.loadCarrito();
       this.clienteSubscriber.unsubscribe();
 
@@ -83,7 +92,9 @@ export class CarritoService {
       this.carritoSubscribe.unsubscribe()
     }
     this.carritoSubscribe = this.authService.getDoc<Pedido>(path, this.uid).subscribe(res => {
+
       if (res) {
+        res = this.pedido;
         this.pedido$.next(this.pedido);
       } else {
         this.initCarrito();
@@ -108,7 +119,7 @@ export class CarritoService {
       } else {
         const add: ProductoPedido = {
           cantidad: 1,
-          producto: producto,
+          producto,
         };
         this.pedido.productos.push(add);
       }
@@ -118,7 +129,9 @@ export class CarritoService {
     }
     this.pedido$.next(this.pedido);
     const path = 'Clientes/' + this.uid + '/' + this.path;
-    this.authService.createDoc(this.pedido, path, this.uid)
+    this.authService.createDoc(this.pedido, path, this.uid).then(() => {
+      console.log('añadido con exito')
+    })
   }
 
   removeProducto(producto: Producto) {

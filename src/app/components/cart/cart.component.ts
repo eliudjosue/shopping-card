@@ -18,7 +18,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
   pedido: Pedido;
   cliente: Cliente;
-  carritoSuscriber: Subscription
+  carritoSuscriber: Subscription;
 
   total: number;
   cantidad: number;
@@ -32,10 +32,10 @@ export class CartComponent implements OnInit, OnDestroy {
     public snackBar: MatSnackBar
   ) {
     this.carritoSuscriber = new Subscription
-    
+
     this.loadPedido();
     this.initCarrito();
-    
+
     this.total = 0
     this.cantidad = 0
 
@@ -120,7 +120,7 @@ export class CartComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.router.navigate(['/mis-pedidos'])
     }, 1500);
-    
+
   }
 
   openSnackBar(message: string, action: string) {
@@ -129,5 +129,5 @@ export class CartComponent implements OnInit, OnDestroy {
     });
   }
 
- 
+
 }
