@@ -12,7 +12,8 @@ import { Observable, Subject, Subscription } from 'rxjs';
 })
 export class CarritoService {
 
-  pedido: Pedido;
+  private pedido: Pedido;
+  res = []
   pedido$ = new Subject<Pedido>();
   path = 'carrito/';
   uid = '';
@@ -63,23 +64,12 @@ export class CarritoService {
 
 
 
-  initCarrito() {
-    this.pedido = {
-      uid: this.uid,
-      cliente: this.cliente,
-      productos: [],
-      precioTotal: 0,
-      estado: 'enviado',
-      fecha: new Date(),
-      valoracion: 0,
-    };
-    this.pedido$.next(this.pedido);
-  }
+
 
   loadCliente() {
     const path = 'Clientes';
     this.clienteSubscriber = this.authService.getDoc<Cliente>(path, this.uid).subscribe(res => {
-      this.cliente == res
+      res = this.cliente;
       this.loadCarrito();
       this.clienteSubscriber.unsubscribe();
 
@@ -93,13 +83,27 @@ export class CarritoService {
     }
     this.carritoSubscribe = this.authService.getDoc<Pedido>(path, this.uid).subscribe(res => {
 
+
       if (res) {
-        res = this.pedido;
+        (this.pedido as unknown) = res;
         this.pedido$.next(this.pedido);
       } else {
         this.initCarrito();
       }
     });
+  }
+
+  initCarrito() {
+    this.pedido = {
+      uid: this.uid,
+      cliente: this.cliente,
+      productos: [],
+      precioTotal: 0,
+      estado: 'enviado',
+      fecha: new Date(),
+      valoracion: 0,
+    };
+    this.pedido$.next(this.pedido);
   }
 
   getCarrito(): Observable<Pedido> {
@@ -130,7 +134,6 @@ export class CarritoService {
     this.pedido$.next(this.pedido);
     const path = 'Clientes/' + this.uid + '/' + this.path;
     this.authService.createDoc(this.pedido, path, this.uid).then(() => {
-      console.log('añadido con exito')
     })
   }
 

@@ -49,7 +49,6 @@ export class LoginComponent implements OnInit {
   ingresarConGoogle() {
     const { email, password } = this.usuario;
     this.authService.loginWithGoogle(email, password).then(res => {
-      console.log("Se registro :", res)
       this.router.navigate(['/home']);
     })
   }

@@ -1,11 +1,6 @@
 .content {
-  /* background-color: #ccc;
-  display: flex;
-  justify-content: center;
-  display: grid;
-  grid-template-columns: 3fr;
-  grid-template-rows: auto;
-  scroll-behavior: smooth; */
+
+ 
   display: flex;
   justify-content: center;
   list-style: none;

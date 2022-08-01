@@ -72,7 +72,6 @@ export class CartComponent implements OnInit, OnDestroy {
   loadPedido() {
     this.carritoSuscriber = this.carritoService.getCarrito().subscribe(res => {
       this.pedido = res;
-      console.log(this.pedido)
       this.getCantidad();
       this.getTotal()
     })
@@ -109,9 +108,9 @@ export class CartComponent implements OnInit, OnDestroy {
     this.pedido.uid = this.authService.getId();
     const uid = await this.authService.getUid()
     const path = 'Clientes/' + uid + '/pedidos/'
-    console.log(' pedir() -> ', this.pedido, uid, path);
+    
     this.authService.createDoc(this.pedido, path, this.pedido.uid).then(() => {
-      console.log('guadado con exito');
+      
       this.carritoService.clearCarrito();
     });
 
