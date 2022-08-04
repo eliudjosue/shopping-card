@@ -26,7 +26,16 @@
                                 [(ngModel)]="newProducto.description"></textarea>
                         </mat-form-field>
 
-                        <br />
+                        <br/>
+                        <button>
+                            <label for="file-upload">
+                              <mat-icon slot="icon-only" name="images">image</mat-icon>
+                            </label>
+                             <input  (change)="uploadImage($event)" id="file-upload" style="display: none" type="file"  accept="image/*">
+                         </button>
+
+                        <br/>
+                        <br/>
                         <section>
                             <button mat-raised-button color="primary" (click)="guardarProducto()">Guardar</button>
                         </section>
@@ -37,7 +46,9 @@
 
         </mat-card>
         <br />
-
+        <div>
+            <img class="image"  [src]="newProducto.foto">
+        </div>
         <br />
         <mat-card>
             <div class="product" *ngFor="let producto of productos">

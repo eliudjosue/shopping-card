@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Cliente } from 'src/app/models/cliente.model';
 import { Producto } from 'src/app/models/producto.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -16,6 +17,7 @@ export class FormProductosComponent implements OnInit {
   newFile: any;
   uid = '';
   constructor(public firestoreService: AuthService,
+    public router: Router,
     public storageService: StorageService) {
     this.cliente = {
       uid: '',
@@ -35,7 +37,6 @@ export class FormProductosComponent implements OnInit {
   newImage = ''
 
 
-
   productos: Producto[] = [];
   newProducto: Producto = {
     nombre: '',
@@ -47,17 +48,19 @@ export class FormProductosComponent implements OnInit {
   }
 
   async guardarProducto() {
-    this.firestoreService.createDoc(this.newProducto, this.path, this.newProducto.id)
     const path = 'Productos';
-    const name = 'prueba'
-    const res = await this.storageService.uploadImageService(this.newFile, path, name);
-    this.newProducto.foto = res;
+    const name = this.newProducto.nombre;
+    if (this.newFile !== undefined) {
+      const res = await this.storageService.uploadImageService(this.newFile, path, name);
+      this.newProducto.foto = res;
+    }
     this.firestoreService.createDoc(this.newProducto, this.path, this.newProducto.id).then(res => {
-      console.log('guado con exito', res)
+      console.log(res)
     }).catch(error => {
       console.log('no se puede guardar', error)
-    })
+    });
 
+    this.router.navigate(['/home'])
   }
 
   getProductos() {
@@ -80,4 +83,7 @@ export class FormProductosComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
     }
   }
+
 }
+
+

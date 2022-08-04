@@ -5,13 +5,8 @@
 
 .grid {
   display: flex;
-  justify-content: center;
-  margin: 20px;
-  text-align: center;
+  justify-content: space-evenly;
   float: left;
+  text-align: justify;
 
-}
-
-.body {
-  background-color: rgb(216, 232, 242);
 }
